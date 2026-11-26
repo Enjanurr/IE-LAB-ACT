@@ -1,0 +1,54 @@
+:root { --red: #d32f2f; color-scheme: light; }
+body { margin: 0; background: #fff; color: #222; font-family: system-ui, Arial, sans-serif; }
+
+.layout { display: flex; gap: 8px; padding: 12px; }
+.left { flex: 3; border: 1px solid #ccc; padding: 14px; min-height: 520px; }
+.right { flex: 1; min-width: 230px; display: flex; flex-direction: column; gap: 4px; }
+.left h3 { margin: 16px 0 8px; }
+
+.controls { display: flex; gap: 8px; flex-wrap: wrap; }
+.controls button {
+  background: #1976d2; color: #fff; border: 0; border-radius: 4px;
+  padding: 8px 14px; font-size: 13px; cursor: pointer;
+}
+.controls button:hover { background: #1565c0; }
+.controls button:focus-visible { outline: 2px solid #0d47a1; outline-offset: 2px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 4px; min-height: 28px; margin: 4px 0 8px; }
+.task {
+  border: 1px solid #777; background: #fff; color: #222;
+  font-size: 12px; padding: 2px 4px; animation: pop .3s ease-out;
+}
+.task-high { border-color: var(--red); color: var(--red); font-weight: 700; }
+
+.service { flex: 1; border: 1px solid #333; padding: 10px; }
+.service-high { border-color: var(--red); }
+.service h4 { margin: 0 0 8px; }
+.label { font-size: 12px; font-weight: 600; }
+
+/* Animated duration bar */
+.bar-track { height: 14px; border: 1px solid var(--red); background: #fff; overflow: hidden; }
+.bar-fill {
+  height: 100%;
+  background-image: linear-gradient(45deg, rgba(255,255,255,.35) 25%, transparent 25%,
+    transparent 50%, rgba(255,255,255,.35) 50%, rgba(255,255,255,.35) 75%, transparent 75%);
+  background-size: 20px 20px;
+  transition: width .25s linear, background-color .4s;
+  animation: stripes 1s linear infinite;
+}
+.bar-fill.low  { background-color: #66bb6a; }
+.bar-fill.mid  { background-color: #ffb74d; }
+.bar-fill.high { background-color: #ef5350; }
+
+@keyframes stripes { to { background-position: 20px 0; } }
+@keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bar-fill, .task { animation: none; transition: none; }
+}
+
+/* Task currently at the counter: its chip drains as work is done */
+.task-serving {
+  background: linear-gradient(to right, #c8e6c9 var(--pct), #fff var(--pct));
+  animation: none;
+}

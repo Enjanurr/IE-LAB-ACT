@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2e7d32; /* Classic felt green card table color */
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.game-container {
+    background-color: #1b5e20;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    width: 90%;
+    max-width: 650px;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: space-around;
+    background-color: #0d3b11;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.score-box p {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 5px 0 0 0;
+    color: #ffeb3b;
+}
+
+.hands-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
+    gap: 20px;
+}
+
+.cards-row {
+    display: flex;
+    gap: 10px;
+}
+
+/* Card Styling */
+.card {
+    width: 65px;
+    height: 95px;
+    background-color: #ffffff;
+    color: #111111;
+    border: 2px solid #333333;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Red suit coloring helper */
+.card.red {
+    color: #d32f2f;
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #ff9800;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e65100;
+}
+
+button:disabled {
+    background-color: #9e9e9e;
+    cursor: not-allowed;
+}

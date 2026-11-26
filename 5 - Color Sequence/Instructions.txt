@@ -1,0 +1,113 @@
+# Reusable Components and Props
+
+## Objective
+
+* To be able to create your own component/s.
+* To apply knowledge of reusable components.
+* To utilize props for parameter passing.
+
+## Instructions
+
+1. Refer to the attached video.
+2. Create a React project and create reusable components using the props concept.
+3. Answer the questions below.
+
+---
+
+## Questions and Answers
+
+### 1. Where is data being passed from parent to child, and how do props make this possible?
+
+Data is passed from the **parent component, `App.jsx`**, to the **child component, `ColorButton`**. The `App.jsx` component owns the board data and interaction state, such as `boardColors`, `revealed`, and `wrongBox`.
+
+When the grid is rendered, `App.jsx` uses `.map()` to pass information to each `ColorButton` through props.
+
+```jsx
+{boardColors.map((color, index) => (
+  <ColorButton
+    key={color.name}
+    color={color.value}
+    isRevealed={revealed.includes(index)}
+    isWrong={wrongBox === index}
+    onClick={() => handleBoxClick(index)}
+    disabled={wrongBox !== null || gameComplete}
+  />
+))}
+```
+
+The `ColorButton` component receives these values through its parameters:
+
+```jsx
+function ColorButton({ color, isRevealed, isWrong, onClick, disabled }) {
+  // component logic
+}
+```
+
+Props make this possible because the parent can send data to a child through attributes written on the JSX component. This allows data to flow from the parent to the child in a predictable way while keeping the parent as the main source of the data.
+
+---
+
+### 2. If we wanted to change the grid size from 3x3 to 4x4, which parts of your code need to change and why?
+
+Two main parts of the code need to change.
+
+First, the **CSS grid definition** needs to be changed from three columns to four columns:
+
+```css
+.board {
+  grid-template-columns: repeat(4, 1fr);
+}
+```
+
+Second, the **color data array** needs to contain 16 entries instead of 9. For example, `baseSequence` and `initialBoard` would need enough color entries to create a 4x4 grid.
+
+The `ColorButton.jsx` component does not need to be changed. This demonstrates the benefit of reusable components because `ColorButton` only needs to know how to display one box. It does not matter whether the parent renders it 9 times, 16 times, or more.
+
+Therefore, changing the grid size mainly involves changing the **number of data items** and the **CSS layout**, rather than rewriting the component itself.
+
+---
+
+### 3. Look at your grid. How does creating a single Box component save you from writing repetitive HTML code?
+
+Creating a single reusable `ColorButton` component prevents us from having to write the same HTML structure for every box in the grid.
+
+For example, instead of manually creating nine separate buttons, we define the component once:
+
+```jsx
+function ColorButton({ color, isRevealed, isWrong, onClick, disabled }) {
+  return (
+    <button
+      className={/* className logic */}
+      style={isRevealed ? { backgroundColor: color } : undefined}
+      onClick={onClick}
+      disabled={disabled || isRevealed}
+    />
+  );
+}
+```
+
+We can then use `.map()` to create as many buttons as needed:
+
+```jsx
+{boardColors.map((color, index) => (
+  <ColorButton key={color.name} />
+))}
+```
+
+This makes the code shorter, easier to maintain, and reusable. If we need to change the design or fix a problem with a box, we only need to modify the `ColorButton` component instead of changing every individual box.
+
+---
+
+### 4. If you remove the `color` prop from the Box component, what happens to the grid squares on your screen? Why?
+
+If the `color` prop is removed, the grid squares would no longer display their individual colors when they are revealed. Instead, they would keep the default background color defined by the CSS.
+
+This happens because the component uses the `color` prop to set the background color:
+
+```jsx
+style={isRevealed ? { backgroundColor: color } : undefined}
+```
+
+Without the `color` prop, `color` would be `undefined`, so React would not apply a specific background color. The squares would therefore use the default styling from the CSS.
+
+The `color` prop is important because it allows the parent component to give each `ColorButton` its specific color. Without it, the reusable component would not know which color each individual square is supposed to display.
